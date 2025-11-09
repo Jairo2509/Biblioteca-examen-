@@ -1,0 +1,341 @@
+/* --- VARIABLES GLOBALES Y RESET --- */
+:root {
+  /* Nueva paleta de colores (más "biblioteca") */
+  --color-primario: #00695C; /* Un verde azulado oscuro */
+  --color-primario-hover: #004D40;
+  --color-secundario: #6c757d;
+  --color-secundario-hover: #5a6268;
+  --color-fondo: #fbfbf8; /* Un fondo crema muy claro */
+  --color-superficie: #ffffff;
+  --color-texto: #1a1a1a; /* Texto más oscuro para mejor contraste */
+  --color-borde: #e0e0e0;
+  --color-exito: #2e7d32;
+  --color-error: #c62828;
+  --fuente-principal: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radio-borde: 8px;
+  /* Sombras más suaves y escalonadas */
+  --sombra: 0 2px 4px rgba(0,0,0,0.04), 0 6px 12px rgba(0,0,0,0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* --- ANIMACIÓN DE ENTRADA (DINÁMICO) --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  font-family: var(--fuente-principal);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  margin: 0;
+  padding: 0;
+  /* Aplicamos la animación de entrada */
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* --- DISEÑO PRINCIPAL Y CONTENEDOR --- */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+header.container {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+h1 {
+  font-weight: 700;
+  /* Efecto de gradiente en el título */
+  background: linear-gradient(45deg, var(--color-primario), var(--color-primario-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-size: 2.5rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--color-secundario);
+  margin: 0.5rem 0 0;
+}
+
+main.container {
+  padding-top: 1rem;
+}
+
+/* --- TARJETAS (CARDS) --- */
+.card {
+  background-color: var(--color-superficie);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--color-borde);
+}
+
+.card h2 {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-borde);
+  padding-bottom: 1rem;
+  color: var(--color-primario);
+}
+
+/* --- FORMULARIO --- */
+#book-form .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Transiciones en Inputs y Selects (DINÁMICO) */
+.field input,
+.field select {
+  width: 100%;
+  padding: 0.75rem;
+  font-family: var(--fuente-principal);
+  font-size: 1rem;
+  border: 1px solid var(--color-borde);
+  border-radius: 4px;
+  background-color: var(--color-fondo);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px rgba(0,105,92,0.2);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* --- BOTONES (CON TRANSICIONES) --- */
+button {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--fuente-principal);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  /* La transición clave para el dinamismo */
+  transition: all 0.2s ease-out;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Botón Primario (Guardar) */
+button[type="submit"] {
+  background-color: var(--color-primario);
+  color: white;
+}
+button[type="submit"]:hover:not(:disabled) {
+  background-color: var(--color-primario-hover);
+  transform: translateY(-2px); /* Pequeño salto */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Botón Secundario (Limpiar, Recargar) */
+button.secondary {
+  background-color: var(--color-superficie);
+  color: var(--color-secundario);
+  border: 1px solid var(--color-borde);
+}
+button.secondary:hover:not(:disabled) {
+  background-color: var(--color-fondo);
+  color: var(--color-secundario-hover);
+  border-color: var(--color-secundario);
+}
+
+/* --- TABLA DE LIBROS --- */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.table-header h2 {
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-borde);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+th, td {
+  padding: 1rem; /* Más espaciado */
+  text-align: left;
+  border-bottom: 1px solid var(--color-borde);
+  vertical-align: middle;
+}
+
+thead {
+  background-color: var(--color-fondo);
+}
+
+th {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-secundario);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Efecto hover en filas (DINÁMICO) */
+tbody tr {
+  transition: background-color 0.15s ease-out;
+}
+tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+td:last-child {
+  white-space: nowrap; 
+}
+
+.action-btn {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.6rem;
+  margin-right: 0.25rem;
+  opacity: 0.9;
+}
+.action-btn:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.edit-btn {
+  background-color: var(--color-exito);
+  color: white;
+}
+.edit-btn:hover {
+  background-color: #1b5e20;
+}
+
+.delete-btn {
+  background-color: var(--color-error);
+  color: white;
+}
+.delete-btn:hover {
+  background-color: #b71c1c;
+}
+
+/* --- FOOTER --- */
+.footer {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--color-secundario);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* --- CLASES DE AYUDA (PARA JS) --- */
+
+/* Animación de resaltado para nueva fila */
+@keyframes highlight {
+  from { background-color: #fffbe6; } /* Amarillo claro */
+  to { background-color: transparent; }
+}
+.highlight-new-row {
+  animation: highlight 2s ease-out;
+}
+
+/* Animación de salida para fila eliminada */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateX(20px); }
+}
+.fading-out {
+  animation: fadeOut 0.5s ease-in forwards;
+}
+
+/* Toast (Notificaciones) */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--color-texto);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radio-borde);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(100px);
+  animation: slideIn 0.5s forwards, slideOut 0.5s 3.5s forwards;
+  z-index: 1000;
+}
+.toast.error {
+  background-color: var(--color-error);
+}
+@keyframes slideIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(100px); }
+}
+
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 768px) {
+  #book-form .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+
+  h1 { font-size: 2rem; }
+  .card { padding: 1rem 1.5rem; }
+}
